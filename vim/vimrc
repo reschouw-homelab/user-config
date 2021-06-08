@@ -1,11 +1,16 @@
 " Disable bell noise and flash
 set belloff=all
 
-" Display Line Numbers
+" Display options
 set number
+set cursorline
+set ruler
 
 " Enable automatic indentation
 set autoindent
+
+" Start scrolling near screen boundaries
+set so=3
 
 " Enable filetype detection:
 filetype on
