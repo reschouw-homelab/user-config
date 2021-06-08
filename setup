@@ -1,0 +1,31 @@
+#!/bin/bash
+# Runs a number of operations to tie in all the config in this repo into 
+# it's respective applications
+
+BASH_LOOP='for i in ~/.config/bash/*.conf; do source $i; done'
+
+# Ensure bashrc sources this repo's config files
+bash-loop() {
+if (($(grep -Fc "$BASH_LOOP" ~/.bashrc) > 0 ))
+  then
+    echo bashrc already configured
+  else
+    echo "# Link to config in https://github.com/reschouw/user-config" >> ~/.bashrc
+    echo "$BASH_LOOP" >> ~/.bashrc
+    echo bashrc configured
+  fi
+}
+
+# Create Symlink for .vimrc
+vimrc-link(){
+  if [ ! -L ~/.vimrc ]
+  then
+    ln -s ~/.config/vim/vimrc ~/.vimrc
+    echo vimrc symlink created
+  else
+    echo vimrc symlink exists
+  fi
+}
+
+bash-loop
+vimrc-link
