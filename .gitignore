@@ -1,4 +1,8 @@
-#Ignore filezilla because it puts config in ~/.config/filezilla apparently
+# Ignore vim files
+*.swp
+*.swo
+
+# Ignore filezilla because it puts config in ~/.config/filezilla apparently
 filezilla*
 
 # GitHub CLI sensitive info & state
