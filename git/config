@@ -1,0 +1,4 @@
+[core]
+  editor = vim
+[commit]
+  template = ~/.config/git/gitmessage.txt

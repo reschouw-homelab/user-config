@@ -1,0 +1,6 @@
+#Ignore filezilla because it puts config in ~/.config/filezilla apparently
+filezilla*
+
+# GitHub CLI sensitive info & state
+gh/hosts.yml
+gh/state.yml
