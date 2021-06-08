@@ -1,16 +1,24 @@
-"set visualbell
+" Disable bell noise and flash
+set belloff=all
+
+" Display Line Numbers
 set number
-set textwidth=0 nosmartindent tabstop=2 shiftwidth=2 softtabstop=2 expandtab
+
+" Enable automatic indentation
+set autoindent
+
+" Use spaces instead of tabs
+set textwidth=0 tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 
 " Auto complete matching characters
 " https://vim.fandom.com/wiki/Automatically_append_closing_characters
 inoremap {      {}<Left>
-"inoremap {}     {}
+inoremap {}     {}
 inoremap (      ()<Left>
-"inoremap ()     ()
+inoremap ()     ()
 inoremap [      []<Left>
-"inoremap []     []
+inoremap []     []
 inoremap "      ""<Left>
-"inoremap ""     ""
+inoremap ""     ""
 inoremap '      ''<Left>
-"inoremap ''     ''
+inoremap ''     ''
