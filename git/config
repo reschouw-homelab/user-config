@@ -2,3 +2,6 @@
   editor = vim
 [commit]
   template = ~/.config/git/gitmessage.txt
+[user]
+	name = Ryan Schouweiler
+	email = reschouw@gmail.com
