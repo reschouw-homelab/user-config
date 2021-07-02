@@ -2,7 +2,22 @@
 # Runs a number of operations to tie in all the config in this repo into 
 # it's respective applications
 
+set -e
+
 BASH_LOOP='for i in ~/.config/bash/*.conf; do source $i; done'
+HOMEDIRS='.bin .bin/terraform-plugins'
+
+# Create directories used for various purposes
+ensure-directories() {
+  for DIR in $HOMEDIRS; do
+    if [[ -d $HOME/$DIR ]]; then
+      echo $DIR exists
+    else
+      mkdir $HOME/$DIR
+      echo $DIR created
+    fi
+  done
+}
 
 # Ensure bashrc sources this repo's config files
 bash-loop() {
@@ -27,5 +42,18 @@ vimrc-link(){
   fi
 }
 
+# Create Symlink for .terraformrc
+terraformrc-link(){
+  if [ ! -L ~/.terraformrc ]
+  then
+    ln -s ~/.config/terraform/terraformrc ~/.terraformrc
+    echo terraformrc symlink created
+  else
+    echo terraformrc symlink exists
+  fi
+}
+
+ensure-directories
 bash-loop
 vimrc-link
+terraformrc-link
