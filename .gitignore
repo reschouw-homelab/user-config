@@ -8,3 +8,6 @@ filezilla*
 # GitHub CLI sensitive info & state
 gh/hosts.yml
 gh/state.yml
+
+# htop nonsense
+htop/
