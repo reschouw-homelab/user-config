@@ -35,9 +35,9 @@ autocmd FileType make set noexpandtab shiftwidth=8 softtabstop=0
 
 " Auto complete matching characters
 " https://vim.fandom.com/wiki/Automatically_append_closing_characters
-inoremap {      {}<Left>
-inoremap {}     {}
-inoremap (      ()<Left>
-inoremap ()     ()
-inoremap [      []<Left>
-inoremap []     []
+"inoremap {      {}<Left>
+"inoremap {}     {}
+"inoremap (      ()<Left>
+"inoremap ()     ()
+"inoremap [      []<Left>
+"inoremap []     []
