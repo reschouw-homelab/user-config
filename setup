@@ -5,7 +5,7 @@
 set -e
 
 BASH_LOOP='for i in ~/.config/bash/*.conf; do source $i; done'
-HOMEDIRS='.bin .bin/terraform-plugins'
+HOMEDIRS='.bin .bin/terraform-plugins .vim/pack/git-plugins/start'
 
 # Create directories used for various purposes
 ensure-directories() {
@@ -13,7 +13,7 @@ ensure-directories() {
     if [[ -d $HOME/$DIR ]]; then
       echo $DIR exists
     else
-      mkdir $HOME/$DIR
+      mkdir -p $HOME/$DIR
       echo $DIR created
     fi
   done
@@ -42,6 +42,17 @@ vimrc-link(){
   fi
 }
 
+# Install ALE (vim linter)
+ale-install(){
+  if [ ! -d ~/.vim/pack/git-plugins/start/ale ]
+  then
+    git clone --depth 1 https://github.com/dense-analysis/ale.git ~/.vim/pack/git-plugins/start/ale
+    echo ALE installed
+  else
+    echo ALE already installed
+  fi
+}
+
 # Create Symlink for .terraformrc
 terraformrc-link(){
   if [ ! -L ~/.terraformrc ]
@@ -56,4 +67,5 @@ terraformrc-link(){
 ensure-directories
 bash-loop
 vimrc-link
+ale-install
 terraformrc-link
