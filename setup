@@ -6,6 +6,7 @@ set -e
 
 BASHRC_LOOP='for i in ~/.config/bashrc/*.conf; do source $i; done'
 BASHLOGIN_LOOP='for i in ~/.config/bashlogin/*.conf; do source $i; done'
+BASHLOGIN_RC='if [[ -f ~/.bashrc ]]; then . ~/.bashrc ; fi'
 HOMEDIRS='.bin .bin/terraform-plugins .vim/pack/git-plugins/start'
 
 # Create directories used for various purposes
@@ -32,14 +33,17 @@ if (($(grep -Fc "$BASHRC_LOOP" ~/.bashrc) > 0 ))
   fi
 }
 
-# Ensure bashrc sources this repo's config files
+# Ensure bash_login sources this repo's config files
 bashlogin-loop() {
-if (($(grep -Fc "$BASHLOGIN_LOOP" ~/.bashrc) > 0 ))
-  then
+  if [[ ! -f $HOME/.bash_login ]]; then
+    touch "$HOME"/.bash_login
+  fi
+  if (( $(grep -Fc "$BASHLOGIN_LOOP" ~/.bash_login) > 0 )); then
     echo bashlogin already configured
   else
-    echo "# Link to config in https://github.com/reschouw/user-config" >> ~/.bash_login
+    echo '# Link to config in https://github.com/reschouw/user-config' >> ~/.bash_login
     echo "$BASHLOGIN_LOOP" >> ~/.bash_login
+    echo "$BASHLOGIN_RC"   >> ~/.bash_login
     echo bashlogin configured
   fi
 }
