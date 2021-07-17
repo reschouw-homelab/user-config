@@ -10,14 +10,16 @@ HOMEDIRS='.bin .bin/terraform-plugins .vim/pack/git-plugins/start'
 # Determine if Mac or Linux(Ubuntu)
 OS="$(uname)"
 
+OUTPUT=()
+
 # Create directories used for various purposes
 ensure-directories() {
   for DIR in $HOMEDIRS; do
     if [[ -d $HOME/$DIR ]]; then
-      echo "$DIR exists"
+      OUTPUT+=("$DIR ok")
     else
       mkdir -p "$HOME/$DIR"
-      echo "$DIR created"
+      OUTPUT+=("$DIR changed")
     fi
   done
 }
@@ -26,11 +28,11 @@ ensure-directories() {
 bashrc-loop() {
 if (($(grep -Fc "$BASHRC_LOOP" ~/.bashrc) > 0 ))
   then
-    echo bashrc already configured
+      OUTPUT+=("bashrc ok")
   else
     echo "# Link to config in https://github.com/reschouw/user-config" >> ~/.bashrc
     echo "$BASHRC_LOOP" >> ~/.bashrc
-    echo bashrc configured
+      OUTPUT+=("bashrc changed")
   fi
 }
 
@@ -39,9 +41,9 @@ vimrc-link(){
   if [ ! -L ~/.vimrc ]
   then
     ln -s ~/.config/vim/vimrc ~/.vimrc
-    echo vimrc symlink created
+    OUTPUT+=("vimrc changed")
   else
-    echo vimrc symlink exists
+    OUTPUT+=("vimrc ok")
   fi
 }
 
@@ -50,9 +52,9 @@ ale-install(){
   if [ ! -d ~/.vim/pack/git-plugins/start/ale ]
   then
     git clone --depth 1 https://github.com/dense-analysis/ale.git ~/.vim/pack/git-plugins/start/ale > /dev/null
-    echo ALE installed
+    OUTPUT+=("ALE changed")
   else
-    echo ALE already installed
+    OUTPUT+=("ALE ok")
   fi
 }
 
@@ -65,9 +67,9 @@ shellcheck-install(){
     else
       brew install shellcheck
     fi
-    echo shellcheck installed
+      OUTPUT+=("shellcheck changed")
   else
-    echo shellcheck already installed
+      OUTPUT+=("shellcheck ok")
   fi
 }
 
@@ -76,9 +78,9 @@ terraformrc-link(){
   if [ ! -L ~/.terraformrc ]
   then
     ln -s ~/.config/terraform/terraformrc ~/.terraformrc
-    echo terraformrc symlink created
+    OUTPUT+=("terraformrc changed")
   else
-    echo terraformrc symlink exists
+    OUTPUT+=("terraformrc ok")
   fi
 }
 
@@ -88,3 +90,9 @@ vimrc-link
 ale-install
 shellcheck-install
 terraformrc-link
+
+# Print all output
+# https://stackoverflow.com/a/3016695
+for LINE in "${OUTPUT[@]}"; do
+  echo "$LINE"
+done | column -t
