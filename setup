@@ -9,6 +9,9 @@ BASHLOGIN_LOOP='for i in ~/.config/bashlogin/*.conf; do source $i; done'
 BASHLOGIN_RC='if [[ -f ~/.bashrc ]]; then . ~/.bashrc ; fi'
 HOMEDIRS='.bin .bin/terraform-plugins .vim/pack/git-plugins/start'
 
+# Determine if Mac or Linux(Ubuntu)
+OS="$(uname)"
+
 # Create directories used for various purposes
 ensure-directories() {
   for DIR in $HOMEDIRS; do
@@ -72,10 +75,13 @@ ale-install(){
 
 # Install Shellcheck (to be used in vim)
 shellcheck-install(){
-  if  ! dpkg-query -l shellcheck > /dev/null 2>&1 ; 
-  then
-    sudo apt-get update > /dev/null
-    sudo apt-get install -y shellcheck > /dev/null
+  if  ! shellcheck -V > /dev/null 2>&1 ; then
+    if [[ "$OS" == "Linux" ]]; then
+      sudo apt-get update > /dev/null
+      sudo apt-get install -y shellcheck > /dev/null
+    else
+      brew install shellcheck
+    fi
     echo shellcheck installed
   else
     echo shellcheck already installed
