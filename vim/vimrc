@@ -1,6 +1,12 @@
+" Load all plugins now.
+" Plugins need to be added to runtimepath before helptags can be generated.
+packloadall
+" Load all of the helptags now, after plugins have been loaded.
+" All messages and errors will be ignored.
+silent! helptags ALL
+
 " Make sure syntax highlighting is on
 syntax on
-
 
 " Disable bell noise and flash
 set belloff=all
@@ -29,9 +35,9 @@ autocmd FileType make set noexpandtab shiftwidth=8 softtabstop=0
 
 " Auto complete matching characters
 " https://vim.fandom.com/wiki/Automatically_append_closing_characters
-inoremap {      {}<Left>
-inoremap {}     {}
-inoremap (      ()<Left>
-inoremap ()     ()
-inoremap [      []<Left>
-inoremap []     []
+"inoremap {      {}<Left>
+"inoremap {}     {}
+"inoremap (      ()<Left>
+"inoremap ()     ()
+"inoremap [      []<Left>
+"inoremap []     []

@@ -4,30 +4,47 @@
 
 set -e
 
-BASH_LOOP='for i in ~/.config/bash/*.conf; do source $i; done'
-HOMEDIRS='.bin .bin/terraform-plugins'
+BASHRC_LOOP='for i in ~/.config/bashrc/*.conf; do source $i; done'
+BASHLOGIN_LOOP='for i in ~/.config/bashlogin/*.conf; do source $i; done'
+BASHLOGIN_RC='if [[ -f ~/.bashrc ]]; then . ~/.bashrc ; fi'
+HOMEDIRS='.bin .bin/terraform-plugins .vim/pack/git-plugins/start'
 
 # Create directories used for various purposes
 ensure-directories() {
   for DIR in $HOMEDIRS; do
     if [[ -d $HOME/$DIR ]]; then
-      echo $DIR exists
+      echo "$DIR exists"
     else
-      mkdir $HOME/$DIR
-      echo $DIR created
+      mkdir -p "$HOME/$DIR"
+      echo "$DIR created"
     fi
   done
 }
 
 # Ensure bashrc sources this repo's config files
-bash-loop() {
-if (($(grep -Fc "$BASH_LOOP" ~/.bashrc) > 0 ))
+bashrc-loop() {
+if (($(grep -Fc "$BASHRC_LOOP" ~/.bashrc) > 0 ))
   then
     echo bashrc already configured
   else
     echo "# Link to config in https://github.com/reschouw/user-config" >> ~/.bashrc
-    echo "$BASH_LOOP" >> ~/.bashrc
+    echo "$BASHRC_LOOP" >> ~/.bashrc
     echo bashrc configured
+  fi
+}
+
+# Ensure bash_login sources this repo's config files
+bashlogin-loop() {
+  if [[ ! -f $HOME/.bash_login ]]; then
+    touch "$HOME"/.bash_login
+  fi
+  if (( $(grep -Fc "$BASHLOGIN_LOOP" ~/.bash_login) > 0 )); then
+    echo bashlogin already configured
+  else
+    echo '# Link to config in https://github.com/reschouw/user-config' >> ~/.bash_login
+    echo "$BASHLOGIN_LOOP" >> ~/.bash_login
+    echo "$BASHLOGIN_RC"   >> ~/.bash_login
+    echo bashlogin configured
   fi
 }
 
@@ -39,6 +56,29 @@ vimrc-link(){
     echo vimrc symlink created
   else
     echo vimrc symlink exists
+  fi
+}
+
+# Install ALE (vim linter)
+ale-install(){
+  if [ ! -d ~/.vim/pack/git-plugins/start/ale ]
+  then
+    git clone --depth 1 https://github.com/dense-analysis/ale.git ~/.vim/pack/git-plugins/start/ale > /dev/null
+    echo ALE installed
+  else
+    echo ALE already installed
+  fi
+}
+
+# Install Shellcheck (to be used in vim)
+shellcheck-install(){
+  if  ! dpkg-query -l shellcheck > /dev/null 2>&1 ; 
+  then
+    sudo apt-get update > /dev/null
+    sudo apt-get install -y shellcheck > /dev/null
+    echo shellcheck installed
+  else
+    echo shellcheck already installed
   fi
 }
 
@@ -54,6 +94,9 @@ terraformrc-link(){
 }
 
 ensure-directories
-bash-loop
+bashrc-loop
+bashlogin-loop
 vimrc-link
+ale-install
+shellcheck-install
 terraformrc-link
