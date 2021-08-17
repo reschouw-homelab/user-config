@@ -11,3 +11,6 @@ gh/state.yml
 
 # htop nonsense
 htop/
+
+# Whatever xbuild is
+xbuild/
