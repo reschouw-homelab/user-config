@@ -14,3 +14,11 @@ htop/
 
 # Whatever xbuild is
 xbuild/
+
+# Various Mac folders
+NuGet/
+karabiner/
+stetic/
+
+# Wireshark config
+wireshark/
