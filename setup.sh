@@ -45,6 +45,28 @@ else
 fi
 
 #
+# Terraform Setup: ------------------------------------------------------------
+#
+
+# Setup terraformrc symlink
+OUTPUT+=("terraformrc_symlink: $(set_symlink ~/.terraformrc ~/.config/terraform/terraformrc)")
+
+#
+# Bashrc Setup: ---------------------------------------------------------------
+#
+
+# Ensure bashrc sources these config files
+BASHRC_LOOP='for i in ~/.config/bashrc/*.conf; do source $i; done'
+if (($(grep -Fc "$BASHRC_LOOP" ~/.bashrc) > 0 ))
+  then
+      OUTPUT+=("bashrc_link: OK")
+  else
+    echo "# Link to config in https://github.com/reschouw/user-config" >> ~/.bashrc
+    echo "$BASHRC_LOOP" >> ~/.bashrc
+      OUTPUT+=("bashrc_link: Changed")
+  fi
+
+#
 # Print Output: --------------------------------------------------------------
 #
 
