@@ -41,3 +41,9 @@ autocmd FileType make set noexpandtab shiftwidth=8 softtabstop=0
 "inoremap ()     ()
 "inoremap [      []<Left>
 "inoremap []     []
+
+" Collect vim files in .cache and use undo files as well.
+set backupdir=~/.config/vim/cache/backup/    " where to put backup files.
+set directory=~/.config/vim/cache/swap/      " where to put swap files.
+set undodir=~/.config/vim/cache/undo/      " where to put undo files.
+set undofile

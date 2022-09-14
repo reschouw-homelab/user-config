@@ -22,8 +22,11 @@ OS="$(uname)"
 # Set up vimrc symlink
 OUTPUT+=("vimrc_symlink: $(set_symlink ~/.vimrc ~/.config/vim/vimrc)")
 
-# Set up vim plugins directory
+# Set up vim directories
 OUTPUT+=("vim_plugins_dir: $(set_directory ~/.vim/pack/git-plugins/start)")
+OUTPUT+=("vim_backup_dir: $(set_directory ~/.config/vim/cache/backup)")
+OUTPUT+=("vim_swap_dir: $(set_directory ~/.config/vim/cache/swap)")
+OUTPUT+=("vim_undo_dir: $(set_directory ~/.config/vim/cache/undo)")
 
 # Install ALE, vim linting plugin
 OUTPUT+=("ALE_installed: $(clone_repo \

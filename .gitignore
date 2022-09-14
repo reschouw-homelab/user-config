@@ -2,6 +2,11 @@
 *.swp
 *.swo
 
+# Ignore vim cache files
+vim/cache/backup/*
+vim/cache/swap/*
+vim/cache/undo/*
+
 # Ignore filezilla because it puts config in ~/.config/filezilla apparently
 filezilla*
 
@@ -15,10 +20,13 @@ htop/
 # Whatever xbuild is
 xbuild/
 
-# Various Mac folders
+# Various app folders
 NuGet/
 karabiner/
 stetic/
+com.corsair/
+configstore/
+yarn/
 
 # Wireshark config
 wireshark/
