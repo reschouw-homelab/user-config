@@ -5,3 +5,5 @@
 [user]
 	name = Ryan Schouweiler
 	email = reschouw@gmail.com
+[push]
+  autoSetupRemote = true
