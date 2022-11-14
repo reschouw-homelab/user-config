@@ -33,15 +33,6 @@ set textwidth=0 tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 " Use tabs instead of spaces for makefiles only
 autocmd FileType make set noexpandtab shiftwidth=8 softtabstop=0
 
-" Auto complete matching characters
-" https://vim.fandom.com/wiki/Automatically_append_closing_characters
-"inoremap {      {}<Left>
-"inoremap {}     {}
-"inoremap (      ()<Left>
-"inoremap ()     ()
-"inoremap [      []<Left>
-"inoremap []     []
-
 " Collect vim files in .cache and use undo files as well.
 set backupdir=~/.config/vim/cache/backup/    " where to put backup files.
 set directory=~/.config/vim/cache/swap/      " where to put swap files.
