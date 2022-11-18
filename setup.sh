@@ -2,7 +2,7 @@
 # Runs a number of operations to tie in all the config files in this repo into 
 # their respective applications
 # 
-
+echo In setup.sh
 set -e
 
 source ./utility.sh
