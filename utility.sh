@@ -1,4 +1,3 @@
-#!/bin/bash
 # utility.sh
 # Functions for file management, etc used by setup.sh
 
