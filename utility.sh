@@ -1,3 +1,4 @@
+#!/bin/bash
 # utility.sh
 # Functions for file management, etc used by setup.sh
 
@@ -36,5 +37,17 @@ clone_repo(){
     echo Changed
   else
     echo OK
+  fi
+}
+
+# Idempotent function for installing a brew package
+# $1 = command name
+brew_install(){
+if (( $(which "$1" | wc -l) > 0))
+  then
+    echo OK
+  else
+    brew install "$1" > /dev/null
+    echo Changed
   fi
 }

@@ -2,7 +2,6 @@
 # Runs a number of operations to tie in all the config files in this repo into 
 # their respective applications
 # 
-echo In setup.sh
 set -e
 
 source ./utility.sh
@@ -68,6 +67,28 @@ if (($(grep -Fc "$BASHRC_LOOP" ~/.bashrc) > 0 ))
     echo "$BASHRC_LOOP" >> ~/.bashrc
       OUTPUT+=("bashrc_link: Changed")
   fi
+
+
+#
+# Brew setup: --------------------------------------------------------------
+#
+
+# Check if brew is installed
+if (( $(which brew | wc -l) > 0))
+  then
+    OUTPUT+=("brew_installed: OK")
+  else
+    sudo NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    OUTPUT+=("brew_installed: Changed")
+  fi
+
+#
+# Brew packages: --------------------------------------------------------------
+#
+
+# Github CLI
+OUTPUT+=("github_cli: $(brew_install gh)")
+
 
 #
 # Print Output: --------------------------------------------------------------
