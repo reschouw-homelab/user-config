@@ -87,7 +87,10 @@ if (( $(which brew | wc -l) > 0))
 #
 
 # Github CLI
-OUTPUT+=("github_cli: $(brew_install gh)")
+OUTPUT+=("github_cli: $(HOMEBREW_NO_INSTALL_CLEANUP=1 brew_install gh)")
+
+# aws-vault
+OUTPUT+=("aws-vault: $(HOMEBREW_NO_INSTALL_CLEANUP=1 brew_install aws-vault)")
 
 
 #
