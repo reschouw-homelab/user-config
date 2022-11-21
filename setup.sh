@@ -74,7 +74,7 @@ if (($(grep -Fc "$BASHRC_LOOP" ~/.bashrc) > 0 ))
 #
 
 # Check if brew is installed
-if (( $(which brew | wc -l) > 0))
+if [ "$(which brew)" ]
   then
     OUTPUT+=("brew_installed: OK")
   else

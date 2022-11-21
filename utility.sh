@@ -42,7 +42,7 @@ clone_repo(){
 # Idempotent function for installing a brew package
 # $1 = command name
 brew_install(){
-if (( $(which "$1" | wc -l) > 0))
+if [ "$(which $1)" ]
   then
     echo OK
   else
