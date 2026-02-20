@@ -1,3 +1,0 @@
-Subject line (<60 characters)
-
-[Ticket: X]
