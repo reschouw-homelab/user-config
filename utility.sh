@@ -32,7 +32,9 @@ set_directory(){
 clone_repo(){
   if [ ! -d "$2/.git" ]
   then
-    git clone "$3" "$1" "$2" > /dev/null
+    # $3 is intentionally unquoted so multi-word args (e.g. "--depth 1") split
+    # shellcheck disable=SC2086
+    git clone $3 "$1" "$2" > /dev/null
     echo Changed
   else
     echo OK
@@ -42,7 +44,7 @@ clone_repo(){
 # Idempotent function for installing a brew package
 # $1 = command name
 brew_install(){
-if [ "$(which $1)" ]
+if [ "$(which "$1")" ]
   then
     echo OK
   else
