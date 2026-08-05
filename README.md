@@ -12,6 +12,7 @@ script to wire it all together. Theoretically Mac and Linux friendly.
 | `setup.sh` | Idempotent bootstrap: symlinks configs, creates vim dirs, installs a few tools. |
 | `utility.sh` | Reusable helper functions used by `setup.sh` (symlink/dir/clone/brew helpers). |
 | `bashrc/*.conf` | Bash fragments sourced on every interactive shell (aliases, PATH, prompt, auto-update). |
+| `bashrc/local.conf.example` | Template for machine/job-specific config; copied to the (gitignored) `local.conf` on setup. |
 | `vim/vimrc` | Vim configuration (symlinked to `~/.vimrc`). |
 | `git/config` | Git defaults (editor, user, `gh` credential helper). |
 | `terraform/terraformrc` | Terraform plugin cache dir (symlinked to `~/.terraformrc`). |
@@ -38,9 +39,20 @@ and re-runs `setup.sh`.
 committed and pushed will be blown away on the next shell. That's intentional,
 the repo is the source of truth. If you tweak something, commit and push it.
 
+## Local, untracked config
+
+Anything machine- or job-specific goes in `bashrc/local.conf`, which is
+gitignored. `setup.sh` seeds it from `bashrc/local.conf.example` on a new
+machine, and the bashrc loop auto-sources it like any other fragment. Because
+it's untracked, the auto-updater's `git reset --hard` leaves it alone, so your
+local tweaks survive updates without ever being committed here.
+
+Use it for work aliases, internal hostnames, credential-adjacent settings, or
+per-machine PATH tweaks that don't belong in a personal repo.
+
 ## Notes
 
 - Job-specific or otherwise sensitive config deliberately lives outside this
-  repo. This is personal preferences only.
+  repo (see above). This is personal preferences only.
 - Secrets and machine-specific junk are handled in `.gitignore`
   (e.g. `gh/hosts.yml`, various app state dirs).

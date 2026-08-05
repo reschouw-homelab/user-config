@@ -1,0 +1,19 @@
+#!/bin/bash
+# local.conf.example
+#
+# Template for machine- or job-specific shell config that should NOT live in
+# this (personal, public-ish) repo. setup.sh copies this to local.conf on a new
+# machine if one doesn't already exist.
+#
+# local.conf is gitignored and auto-sourced by the bashrc loop, so anything you
+# put here loads on every interactive shell but never gets committed. Because
+# it's untracked, the auto-updater's `git reset --hard` leaves it alone.
+#
+# Good candidates: work-specific aliases, internal hostnames, credential-adjacent
+# settings, per-machine PATH tweaks.
+
+# Example: work aws-vault aliases
+# alias eaxx='aws-vault exec some-work-profile --no-session --'
+
+# Example: internal hosts
+# alias bastion='ssh you@bastion.internal.example.com'

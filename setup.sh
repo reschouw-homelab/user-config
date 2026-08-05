@@ -58,6 +58,9 @@ OUTPUT+=("terraformrc_symlink: $(set_symlink ~/.terraformrc ~/.config/terraform/
 #
 
 # Ensure bashrc sources these config files
+# Single quotes are intentional: we want the literal $i written to ~/.bashrc,
+# not expanded here.
+# shellcheck disable=SC2016
 BASHRC_LOOP='for i in ~/.config/bashrc/*.conf; do source $i; done'
 if (($(grep -Fc "$BASHRC_LOOP" ~/.bashrc) > 0 ))
   then
@@ -68,6 +71,17 @@ if (($(grep -Fc "$BASHRC_LOOP" ~/.bashrc) > 0 ))
       OUTPUT+=("bashrc_link: Changed")
   fi
 
+
+#
+# Local (untracked) config: ---------------------------------------------------
+#
+
+# Seed local.conf for machine/job-specific settings that shouldn't live in the
+# repo. It's gitignored and auto-sourced by the bashrc loop.
+OUTPUT+=("local_conf: $(copy_if_missing \
+  ~/.config/bashrc/local.conf.example \
+  ~/.config/bashrc/local.conf \
+)")
 
 #
 # Brew setup: --------------------------------------------------------------

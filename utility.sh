@@ -1,5 +1,6 @@
 # utility.sh
 # Functions for file management, etc used by setup.sh
+# shellcheck shell=bash
 
 # Idempotent function for creating a symlink
 # $1 = link source
@@ -38,6 +39,19 @@ clone_repo(){
     echo Changed
   else
     echo OK
+  fi
+}
+
+# Idempotent function for seeding a file from a template only if it does not
+# already exist (used for local, untracked config).
+# $1 = source template
+# $2 = destination
+copy_if_missing(){
+  if [ -f "$2" ]; then
+    echo OK
+  else
+    cp "$1" "$2"
+    echo Changed
   fi
 }
 

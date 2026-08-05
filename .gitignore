@@ -10,6 +10,9 @@ vim/cache/undo/*
 # Ignore filezilla because it puts config in ~/.config/filezilla apparently
 filezilla*
 
+# Local, untracked machine/job-specific bash config (seeded from local.conf.example)
+bashrc/local.conf
+
 # GitHub CLI sensitive info & state
 gh/hosts.yml
 gh/state.yml
