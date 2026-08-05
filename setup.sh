@@ -84,27 +84,29 @@ OUTPUT+=("local_conf: $(copy_if_missing \
 )")
 
 #
-# Brew setup: --------------------------------------------------------------
+# Package manager + GitHub CLI: -----------------------------------------------
 #
 
-# Check if brew is installed
-if [ "$(which brew)" ]
-  then
+if [ "$OS" = "Darwin" ]; then
+  # Homebrew is the macOS package manager here. Never install it as root:
+  # the installer elevates via sudo itself when needed. Using `elif` on the
+  # install keeps a failure from aborting setup.sh under `set -e`.
+  if [ "$(which brew)" ]; then
     OUTPUT+=("brew_installed: OK")
-  else
-    sudo NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  elif NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; then
     OUTPUT+=("brew_installed: Changed")
+  else
+    OUTPUT+=("brew_installed: Failed")
   fi
 
-#
-# Brew packages: --------------------------------------------------------------
-#
+  # GitHub CLI via brew
+  OUTPUT+=("github_cli: $(HOMEBREW_NO_INSTALL_CLEANUP=1 brew_install gh)")
 
-# Github CLI
-OUTPUT+=("github_cli: $(HOMEBREW_NO_INSTALL_CLEANUP=1 brew_install gh)")
-
-# aws-vault
-OUTPUT+=("aws-vault: $(HOMEBREW_NO_INSTALL_CLEANUP=1 brew_install aws-vault)")
+elif [ "$OS" = "Linux" ]; then
+  # No Homebrew on Linux. Install the GitHub CLI per-user (no root) from the
+  # official release tarball into ~/.local/bin.
+  OUTPUT+=("github_cli: $(install_gh)")
+fi
 
 
 #
